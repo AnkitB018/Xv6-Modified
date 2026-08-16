@@ -390,10 +390,9 @@ kwait(uint64 addr)
           // Found one.
           pid = pp->pid;
           if (addr != 0 &&
-              copyout(p->pagetable, p->sz, addr, (char *)&pp->xstate,
-                      sizeof(pp->xstate)) < 0) {
-            release(&pp->lock);
+            copyout(p->pagetable, p->sz, addr, (char *)&pp->xstate,sizeof(pp->xstate)) < 0){
             release(&wait_lock);
+	    release(&pp->lock);
             return -1;
           }
           pp->parent = 0;

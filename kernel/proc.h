@@ -78,6 +78,8 @@ struct trapframe {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
+#define NSYSCALLS 30
+
 // Per-process state
 struct proc {
   struct spinlock lock;
@@ -92,6 +94,7 @@ struct proc {
   // wait_lock must be held when using this:
   struct proc *parent; // Parent process
   int child_count;   // number of childs of a process
+  int syscall_count[NSYSCALLS]  // number of system calls made
   // these are private to the process, so p->lock need not be held.
   uint64 kstack;               // Virtual address of kernel stack
   uint64 sz;                   // Size of process memory (bytes)

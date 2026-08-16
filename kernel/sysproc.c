@@ -55,6 +55,34 @@ sys_get_process_child_count(void){
 }
 
 uint64
+sys_nfork(void){
+  int n;
+  uint64 child_pids_addr;
+  
+  argint(0, &n);  
+  argaddr(1, &child_pids_addr);
+
+  struct proc *p = myproc();
+
+  for(int i=0 ; i<n ; i++){
+    int pid = kfork();
+
+    if(pid < 0){
+      return -1;
+    }
+
+    if(copyout( p->pagetable,p->sz, child_pids_addr + i * sizeof(int),(char *)&pid,
+		sizeof(int) ) < 0){
+      return -1; 
+    }
+  
+  }
+
+  return n;
+
+}
+
+uint64
 sys_fork(void)
 {
   return kfork();
