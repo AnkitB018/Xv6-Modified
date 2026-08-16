@@ -54,6 +54,32 @@ sys_get_process_child_count(void){
 
 }
 
+
+
+// to print syscalls used by a process - Antro
+uint64
+sys_print_syscalls(void){
+  struct proc *p = myproc();
+  printk("syscall_number\t");
+  printk("invocations\n");
+
+  for(int i=0 ; i<NSYSCALLS; i++){
+    if(p->syscall_count[i] > 0){
+      printk("%d\t\t%d\n", i, p->syscall_count[i]);
+    }
+  }
+
+  return 0;
+}
+
+// implementation defined in proc.c, used to syscalls of a given pid - Antro
+uint64
+sys_print_process_syscalls(void){
+  int pid;
+  argint(0, &pid);
+  return print_process_syscalls(pid);
+}
+
 uint64
 sys_nfork(void){
   int n;

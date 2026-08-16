@@ -126,6 +126,10 @@ found:
   p->state = USED;
   p->child_count = 0;
 
+  for(int i=0 ; i<NSYSCALLS; i++){
+    p->syscall_count[i] = 0;
+  }
+
   // Allocate a trapframe page.
   if ((p->trapframe = (struct trapframe *)kalloc()) == 0) {
     freeproc(p);
@@ -720,4 +724,32 @@ get_process_child_count(int pid){
 
   return -1;
 
+}
+
+// to get process syscall count, the current process implementation is in sysproc - Antro
+int
+print_process_syscalls(int pid){
+  struct proc *p;
+  // loop through the process table to find the matching pid - Antro
+  for(p = proc; p<&proc[NPROC]; p++){
+    acquire(&p->lock);
+    if(p->pid == pid){
+      //found the match - Antro
+      
+      printk("syscall_numebr\t");
+      printk("invocations\n");
+      for(int i=0; i<NSYSCALLS ; i++){
+        if(p->syscall_count[i] > 0){
+	  printk("%d\t\t%d\n", i, p->syscall_count[i]);
+	} 
+      }
+      
+      release(&p->lock);
+      return 0;
+    }
+
+    release(&p->lock);
+  }
+
+  return -1;
 }
