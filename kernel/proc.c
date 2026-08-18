@@ -127,7 +127,7 @@ found:
   p->child_count = 0;
 
   for(int i=0 ; i<NSYSCALLS; i++){
-    p->syscall_count[i] = 0;
+    p->syscall_count[i] = 0; //Initialize all syscall count to zero - Antro
   }
 
   // Allocate a trapframe page.

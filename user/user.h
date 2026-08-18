@@ -32,6 +32,9 @@ int get_process_child_count(int pid);
 int nfork(int n, int *child_pids);
 int print_syscalls(void);
 int print_process_syscalls(int pid);
+int get_inode_num(int fd);
+int get_read_offset(int fd);
+int filepeek(int fd, char *user_addr, int num_bytes);
 
 
 // ulib.c

@@ -78,7 +78,7 @@ struct trapframe {
 
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
-#define NSYSCALLS 30
+#define NSYSCALLS 50
 
 // Per-process state
 struct proc {

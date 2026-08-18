@@ -509,3 +509,89 @@ sys_pipe(void)
   }
   return 0;
 }
+
+// system call for returning Inode number - Antro
+uint64
+sys_get_inode_num(void){
+  int fd;
+
+  argint(0, &fd);
+  if(fd < 0 || fd >= NOFILE){
+    return -1;
+  }
+ 
+  struct proc *p = myproc();
+
+  struct file *f = p->ofile[fd];
+
+  if(f == 0 || f->type != FD_INODE || !f->readable){
+    return -1;
+  }
+
+  return f->ip->inum;
+
+}
+
+
+//system call for returning current offset value - Antro
+uint64
+sys_get_read_offset(void){
+  int fd;
+
+  argint(0, &fd);
+
+  if(fd < 0 || fd >= NOFILE){
+    return -1;
+  }
+
+  struct proc *p = myproc();
+  
+  struct file *f = p->ofile[fd];
+  if(f == 0 || f->type != FD_INODE || !f->readable){
+    return -1;
+  }
+
+  return f->off;
+
+}
+
+//system call for peeking info file without advancing the offset - Antro
+#define PEEK_MAX 512
+uint64
+sys_filepeek(void){
+  int fd, num_bytes;
+  uint64 user_addr;
+
+  argint(0, &fd);
+  argaddr(1, &user_addr);
+  argint(2, &num_bytes);
+
+  struct proc *p = myproc();
+  
+  if(fd < 0 || fd >= NOFILE || num_bytes < 0){
+    return -1;
+  }
+
+  struct file *f = p->ofile[fd];
+
+  if(f == 0 || f->type != FD_INODE || !f->readable){
+    return -1;
+  }
+
+  if(num_bytes > PEEK_MAX){
+    return -1;
+  }
+  char buf[PEEK_MAX];
+
+  int n = readi(f->ip, 0, (uint64)buf, f->off, num_bytes);
+  if(n == 0){
+    return -2;
+  }
+
+  if(copyout(p->pagetable, p->sz, user_addr, buf, n) < 0){
+    return -1;
+  }
+
+  return n;
+
+}
