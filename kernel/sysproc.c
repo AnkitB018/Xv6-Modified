@@ -220,4 +220,19 @@ sys_get_pteflags(void){
   return 0;
 }
 
-//
+//system call to convert virtual address to physical address
+uint64
+sys_va2pa(void){
+  uint64 va;
+  argaddr(0, &va);
+
+  struct proc *p = myproc();
+
+  uint64 pa = walkaddr(p->pagetable, va);
+
+  if(pa == 0){
+    return 0;
+  } 
+
+  return (pa + (va % PGSIZE));
+}

@@ -37,7 +37,7 @@ int get_read_offset(int fd);
 int filepeek(int fd, char *user_addr, int num_bytes);
 int pte_valid(uint64 va);
 void get_pteflags(uint64 va);
-
+uint64 va2pa(uint64 va);
 
 // ulib.c
 int stat(const char *, struct stat *);
