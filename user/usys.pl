@@ -56,3 +56,4 @@ entry("filepeek");
 entry("pte_valid");
 entry("get_pteflags");
 entry("va2pa");
+entry("getvasize");

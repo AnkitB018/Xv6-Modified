@@ -773,3 +773,22 @@ get_pteflags(uint64 va){
          (*pte & PTE_X) != 0,
          (*pte & PTE_U) != 0);
 }
+
+//Get total address space size occupied by a process - Antro
+int
+getvasize(int pid){
+  struct proc *p;
+  for(p = proc ; p<&proc[NPROC]; p++){
+    acquire(&p->lock);
+
+    if(p->pid == pid){
+      //found my process
+      int size = p->sz;
+      release(&p->lock);
+      return size;
+    }
+    release(&p->lock);
+  }
+
+  return -1;
+}

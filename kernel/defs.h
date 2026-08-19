@@ -182,6 +182,7 @@ void            plic_complete(int);
 // from proc.c
 int get_process_child_count(int pid);
 int print_process_syscalls(int pid);
+int getvasize(int pid);
 
 // virtio_disk.c
 void            virtio_disk_init(void);

@@ -220,7 +220,7 @@ sys_get_pteflags(void){
   return 0;
 }
 
-//system call to convert virtual address to physical address
+//system call to convert virtual address to physical address - Antro
 uint64
 sys_va2pa(void){
   uint64 va;
@@ -235,4 +235,13 @@ sys_va2pa(void){
   } 
 
   return (pa + (va % PGSIZE));
+}
+
+//system call defiend in proc.c used to get the total address space size of a process - Antro
+uint64
+sys_getvasize(void){
+  int pid;
+  argint(0, &pid);
+
+  return getvasize(pid);
 }

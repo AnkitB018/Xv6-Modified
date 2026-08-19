@@ -126,6 +126,7 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 .PRECIOUS: %.o
 
 UPROGS=\
+        $U/_v_getvasize\
         $U/_t3_va2pa\
         $U/_t2_va2pa\
         $U/_t1_va2pa\
