@@ -753,3 +753,23 @@ print_process_syscalls(int pid){
 
   return -1;
 }
+
+//Get set permission bits in PTE - Antro
+void
+get_pteflags(uint64 va){
+  struct proc *p = myproc();
+  pte_t *pte = walk(p->pagetable, va, 0);
+  
+  if(pte == 0 || (*pte & PTE_V) == 0){
+    printk("Invalid address\n");
+    return;
+  }
+
+  printk("VA: %p  ->  ", (void *)va);
+  
+  printk("R:%d W:%d X:%d U:%d\n",
+         (*pte & PTE_R) != 0,
+         (*pte & PTE_W) != 0,
+         (*pte & PTE_X) != 0,
+         (*pte & PTE_U) != 0);
+}

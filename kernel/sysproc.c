@@ -196,3 +196,28 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+//checking if PTE for this VA is valid or not - Antro
+uint64
+sys_pte_valid(void){
+  uint64 va;
+  argaddr(0, &va);
+
+  struct proc *p = myproc();
+
+  return ismapped(p->pagetable, va);
+}
+
+// Function in proc.c: to check permission bits in PTE - Antro
+
+uint64
+sys_get_pteflags(void){
+  uint64 va;
+  argaddr(0, &va);
+
+  get_pteflags(va);
+
+  return 0;
+}
+
+//

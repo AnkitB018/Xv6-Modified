@@ -31,3 +31,5 @@
 #define SYS_get_inode_num 30
 #define SYS_get_read_offset 31
 #define SYS_filepeek 32
+#define SYS_pte_valid 33
+#define SYS_get_pteflags 34

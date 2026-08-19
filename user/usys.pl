@@ -53,3 +53,5 @@ entry("print_process_syscalls");
 entry("get_inode_num");
 entry("get_read_offset");
 entry("filepeek");
+entry("pte_valid");
+entry("get_pteflags");
