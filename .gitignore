@@ -10,4 +10,4 @@ _*
 /user/usys.S
 .gdbinit
 TAGS
-.gitignore
+.DS_STORE
