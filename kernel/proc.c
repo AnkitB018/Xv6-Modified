@@ -754,6 +754,33 @@ print_process_syscalls(int pid){
   return -1;
 }
 
+// get state of a process using it's pid - Antro
+int
+get_process_state(int pid){
+  struct proc *p;
+  for(p = proc; proc<&proc[NPROC]; p++){
+    acquire(&p->lock);
+    if(p->pid == pid){
+      // found the match
+
+      switch(p->state){
+        case UNUSED: printk("UNUSED");break;
+	case USED: printk("USED");break;
+	case SLEEPING: printk("SLEEPING");break;
+	case RUNNABLE: printk("RUNNABLE");break;
+	case RUNNING: printk("RUNNING");break;
+	case ZOMBIE: printk("ZOMBIE");break;
+      }
+
+      release(&p->lock);
+      return 0;
+    }
+    release(&p->lock);
+  }
+
+  return -1;
+}
+
 //Get set permission bits in PTE - Antro
 void
 get_pteflags(uint64 va){

@@ -209,6 +209,12 @@ sys_pte_valid(void){
 }
 
 // Function in proc.c: to check permission bits in PTE - Antro
+uint64
+sys_get_process_state(void){
+  int pid;
+  argint(0, &pid);
+  return get_process_state(pid);
+}
 
 uint64
 sys_get_pteflags(void){

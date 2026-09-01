@@ -35,3 +35,4 @@
 #define SYS_get_pteflags 34
 #define SYS_va2pa 35
 #define SYS_getvasize 36
+#define SYS_get_process_state 37
