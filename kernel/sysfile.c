@@ -597,4 +597,37 @@ sys_filepeek(void){
 }
 
 // System call for returning number of lines in a file - Antro
+uint64
+sys_file_nlines(void){
+  int fd;
+  argint(0, &fd);
 
+  struct proc *p = myproc();
+  if(fd < 0 || fd > NOFILE){
+    return -1;
+  }
+
+  struct file *f = p->ofile[fd];
+  if( f == 0 || f->type != FD_INODE){
+    return -1;
+  }
+
+  char buf[1];
+  int n;
+  int total=0;
+  int count = 0;
+  while(( n = readi(f->ip, 0, (uint64)buf, f->off+total, 1) ) > 0 ){
+    if(buf[0] == '\n'){
+      count++;
+    }
+
+    total += n;
+  }
+
+  if(n < 0){
+    return -1;
+  }
+
+  return count;
+
+}

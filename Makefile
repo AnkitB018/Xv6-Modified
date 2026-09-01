@@ -126,6 +126,7 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 .PRECIOUS: %.o
 
 UPROGS=\
+        $U/_test_nlines\
         $U/_test_get_state\
         $U/_v_getvasize\
         $U/_t3_va2pa\

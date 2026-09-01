@@ -58,3 +58,4 @@ entry("get_pteflags");
 entry("va2pa");
 entry("getvasize");
 entry("get_process_state");
+entry("file_nlines");

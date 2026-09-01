@@ -36,3 +36,4 @@
 #define SYS_va2pa 35
 #define SYS_getvasize 36
 #define SYS_get_process_state 37
+#define SYS_file_nlines 38 

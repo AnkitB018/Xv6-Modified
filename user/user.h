@@ -40,7 +40,7 @@ void get_pteflags(uint64 va);
 uint64 va2pa(uint64 va);
 int getvasize(int pid);
 int get_process_state(int pid);
-
+int file_nlines(int fd);
 // ulib.c
 int stat(const char *, struct stat *);
 char *strcpy(char *, const char *);
