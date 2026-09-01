@@ -41,6 +41,7 @@ uint64 va2pa(uint64 va);
 int getvasize(int pid);
 int get_process_state(int pid);
 int file_nlines(int fd);
+int get_page_count(int pid);
 // ulib.c
 int stat(const char *, struct stat *);
 char *strcpy(char *, const char *);

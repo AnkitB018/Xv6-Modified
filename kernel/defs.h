@@ -105,6 +105,7 @@ int             either_copyin(void *dst, int user_src, uint64 src, uint64 len);
 void            procdump(void);
 void            get_pteflags(uint64 va);
 int             get_process_state(int pid);
+int 		get_page_count(int pid);
 
 // swtch.S
 void            swtch(struct context*, struct context*);

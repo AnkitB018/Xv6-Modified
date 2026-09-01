@@ -119,6 +119,7 @@ extern uint64 sys_va2pa(void);
 extern uint64 sys_getvasize(void);
 extern uint64 sys_get_process_state(void);
 extern uint64 sys_file_nlines(void);
+extern uint64 sys_get_page_count(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -162,6 +163,7 @@ static uint64 (*syscalls[])(void) = {
   [SYS_getvasize] sys_getvasize,
   [SYS_get_process_state] sys_get_process_state,
   [SYS_file_nlines] sys_file_nlines,
+  [SYS_get_page_count] sys_get_page_count,
   // clang-format on
 };
 

@@ -819,3 +819,59 @@ getvasize(int pid){
 
   return -1;
 }
+
+
+// forward declaration needed
+int page_count(pagetable_t);
+
+
+// Get number of pages allocated to a process - Antro
+int get_page_count(int pid){
+  struct proc *p;
+  pagetable_t table = 0;
+  for(p = proc ; p<&proc[NPROC]; p++){
+    acquire(&p->lock);
+
+    if(pid == p->pid){
+      table = p->pagetable;
+
+      release(&p->lock);
+      break;
+    }
+
+    release(&p->lock);
+  }  
+
+  if(!table){
+    return -1;
+  }
+ 
+  return page_count(table);
+  
+
+}
+
+//helper function for the above - Antro
+int page_count(pagetable_t table){
+  int count = 0;
+  for(int i=0 ; i<512 ; i++){
+    pte_t pte = table[i];
+    if( (pte & PTE_V) && (pte & (PTE_R | PTE_W | PTE_X) ) == 0 ){
+      //this is a non-leaf page recursiveley go deeper
+
+      uint64 child = PTE2PA(pte);
+      count += page_count((pagetable_t)child);
+    }else{
+      if((pte & PTE_V) == 0){
+        continue;
+      }
+
+      if(pte & (PTE_R | PTE_W | PTE_X)){
+        count++;
+      }
+
+    }
+  }
+
+  return count;
+}

@@ -37,3 +37,4 @@
 #define SYS_getvasize 36
 #define SYS_get_process_state 37
 #define SYS_file_nlines 38 
+#define SYS_get_page_count 39

@@ -216,6 +216,7 @@ sys_get_process_state(void){
   return get_process_state(pid);
 }
 
+
 uint64
 sys_get_pteflags(void){
   uint64 va;
@@ -250,4 +251,13 @@ sys_getvasize(void){
   argint(0, &pid);
 
   return getvasize(pid);
+}
+
+//system call to get number of pages allocated to a process - Antro
+uint64
+sys_get_page_count(void){
+  int pid;
+  argint(0, &pid);
+
+  return get_page_count(pid);
 }
